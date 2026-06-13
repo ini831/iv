@@ -1,57 +1,46 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexAI | 智能对话</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050505; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        /* 极致深色配色表 */
+        :root {
+            --bg-body: #0d0d0d;    /* 极致背景 */
+            --bg-sidebar: #171717; /* 侧边栏稍亮，区分层次 */
+            --bg-input: #2f2f2f;   /* 输入框背景 */
+            --text-main: #ececec;  /* 主文字 */
+            --text-muted: #8e8e8e; /* 次要文字 */
+        }
+        body { background-color: var(--bg-body); color: var(--text-main); }
     </style>
 </head>
-<body>
+<body class="flex h-screen font-sans">
 
-    <!-- 简化的 Hero 区域 -->
-    <div class="h-screen flex flex-col justify-center items-center">
-        <h1 class="text-5xl font-bold mb-4">NexAI 智能助手</h1>
-        <p class="text-gray-400">输入内容开始实时交互体验</p>
-    </div>
-
-    <!-- 悬浮聊天框 -->
-    <div id="chat-container" class="fixed bottom-6 right-6 w-80 glass rounded-2xl p-4 shadow-2xl transition-all">
-        <div id="chat-messages" class="h-64 overflow-y-auto mb-4 space-y-3 text-sm">
-            <div class="text-gray-400">NexAI: 您好，有什么我可以帮您的吗？</div>
+    <!-- 侧边栏：略浅于背景，产生悬浮感 -->
+    <aside class="w-64 bg-[#171717] p-3 flex flex-col justify-between">
+        <div class="space-y-2">
+            <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-[#202020] transition text-sm">＋ 新聊天</button>
+            <div class="text-xs text-[#8e8e8e] px-3 py-2">历史记录</div>
         </div>
-        <div class="flex gap-2">
-            <input id="chat-input" type="text" placeholder="输入消息..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-blue-500">
-            <button onclick="sendMessage()" class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-500 transition">发送</button>
+        <div class="border-t border-[#2f2f2f] pt-2">
+            <div class="px-3 py-2 text-sm text-[#8e8e8e] hover:text-white cursor-pointer transition">设置</div>
         </div>
-    </div>
+    </aside>
 
-    <script>
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const messages = document.getElementById('chat-messages');
-            if (input.value.trim() === "") return;
+    <!-- 主聊天区：纯粹的极简风格 -->
+    <main class="flex-1 flex flex-col items-center justify-center">
+        <h1 class="text-3xl font-semibold mb-10">我们先从哪里开始呢？</h1>
+        
+        <!-- 模仿 image_2.png 的输入框风格 -->
+        <div class="w-full max-w-2xl px-4">
+            <div class="bg-[#2f2f2f] rounded-2xl p-4 flex items-center shadow-lg border border-[#404040] hover:border-[#505050] transition">
+                <input type="text" placeholder="有问题，尽管问" class="w-full bg-transparent outline-none text-white px-2">
+                <div class="flex gap-2">
+                    <span class="text-[#8e8e8e] cursor-pointer">🎤</span>
+                </div>
+            </div>
+        </div>
+    </main>
 
-            // 添加用户消息
-            messages.innerHTML += `<div class="text-right text-blue-400">你: ${input.value}</div>`;
-            
-            // 模拟回复
-            const userText = input.value;
-            input.value = "";
-            
-            setTimeout(() => {
-                messages.innerHTML += `<div class="text-gray-400">NexAI: 收到消息 "${userText}"，系统已进入处理模式。</div>`;
-                messages.scrollTop = messages.scrollHeight;
-            }, 600);
-        }
-
-        // 支持回车发送
-        document.getElementById('chat-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-    </script>
 </body>
 </html>
