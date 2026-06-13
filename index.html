@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAI | 智能对话</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050505; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body>
+
+    <!-- 简化的 Hero 区域 -->
+    <div class="h-screen flex flex-col justify-center items-center">
+        <h1 class="text-5xl font-bold mb-4">NexAI 智能助手</h1>
+        <p class="text-gray-400">输入内容开始实时交互体验</p>
+    </div>
+
+    <!-- 悬浮聊天框 -->
+    <div id="chat-container" class="fixed bottom-6 right-6 w-80 glass rounded-2xl p-4 shadow-2xl transition-all">
+        <div id="chat-messages" class="h-64 overflow-y-auto mb-4 space-y-3 text-sm">
+            <div class="text-gray-400">NexAI: 您好，有什么我可以帮您的吗？</div>
+        </div>
+        <div class="flex gap-2">
+            <input id="chat-input" type="text" placeholder="输入消息..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+            <button onclick="sendMessage()" class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-500 transition">发送</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            if (input.value.trim() === "") return;
+
+            // 添加用户消息
+            messages.innerHTML += `<div class="text-right text-blue-400">你: ${input.value}</div>`;
+            
+            // 模拟回复
+            const userText = input.value;
+            input.value = "";
+            
+            setTimeout(() => {
+                messages.innerHTML += `<div class="text-gray-400">NexAI: 收到消息 "${userText}"，系统已进入处理模式。</div>`;
+                messages.scrollTop = messages.scrollHeight;
+            }, 600);
+        }
+
+        // 支持回车发送
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
